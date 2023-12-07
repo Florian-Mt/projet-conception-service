@@ -1,24 +1,27 @@
-# Vue 3 + TypeScript + Vite
+# Projet de conception de service
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Blogue listant des articles.
 
-## Recommended IDE Setup
+## Environnement recommandé
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+* [VS Code](https://code.visualstudio.com/)
+* [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (sans Vetur)
+* [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
 
-## Type Support For `.vue` Imports in TS
+## Commandes
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+### Développement
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+* `npm install` pour installer les dépendances
+* `npm run dev` pour démarrer
+* Ouvrir le navigateur à l’adresse indiquée par la commande `run` (`localhost:<PORT>`)
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+### Compilation
 
-## Startup
+* `npm run build` pour “compiler”
+* `npm run preview` pour servir l’application “compilée”
+* Ouvrir le navigateur à l’adresse indiquée par la commande `run` (`localhost:<PORT>`)
 
-* `npm install`
-* `npm run dev`
-* Visit `localhost` at the given port (generally `5173`)
+### Source de composants
+
+Pour gagner du temps, les composants sont tirés de [Flowbite](https://flowbite.com/docs/components/), une bibliothèque de composants pour Tailwind. Certains composants ont toutefois été remaniés, notamment pour implémenter les éléments d’interactivité et d’accessibilité manquants.
