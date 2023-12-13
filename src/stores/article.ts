@@ -6,6 +6,7 @@ export type Article = {
   author: string
   date: string
   content: Array<string>
+  image?: string
 }
 
 export const useArticleStore = defineStore('article', {

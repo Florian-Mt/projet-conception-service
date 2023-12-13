@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  <ArticleTemplate />
+  <ArticleTemplate/>
 </template>

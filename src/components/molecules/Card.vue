@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Article } from '@/stores/articles'
+  import { Article } from '@/stores/article.ts'
 
   const {id, article} = defineProps<{
     id: number
@@ -10,7 +10,7 @@
 <template>
   <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <router-link :to="{name: 'ArticlePage', params: {id: id}}">
-      <img class="rounded-t-lg" src="/public/eggs.webp" alt="" />
+      <img class="rounded-t-lg" :src="article.image" alt="" />
     </router-link>
 
     <div class="flex flex-col p-5">
