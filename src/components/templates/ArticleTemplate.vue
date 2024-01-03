@@ -1,147 +1,81 @@
-<script setup>
-import {useArticleStore} from '@/stores/article.ts'
-import {useRoute} from "vue-router";
+<script setup lang="ts">
+  import { Article } from '@/stores/articles'
 
-const route = useRoute()
+  const {article} = defineProps<{
+    article: Article
+  }>()
 
-const articleStore = useArticleStore()
-const article = articleStore.articles[route.params.id]
+  const reactions = [
+    {
+      message: 'You liked the article',
+      icon: 'icon_like.png',
+      alt: 'thumb up to like content',
+    },
+    {
+      message: 'You loved the article',
+      icon: 'icon_heart.png',
+      alt: 'heart to love content',
+    },
+    {
+      message: 'You laughed at the article',
+      icon: 'icon_laugh.png',
+      alt: 'laugh to funny content',
+    },
+    {
+      message: 'You are chocked by the article',
+      icon: 'icon_chocked.png',
+      alt: 'surprised by the content',
+    },
+    {
+      message: 'You are sad because of the article',
+      icon: 'icon_sad.png',
+      alt: 'sad to sympathise with content',
+    },
+    {
+      message: 'You hated the article',
+      icon: 'icon_angry.png',
+      alt: 'angry to hate content',
+    },
+  ]
 </script>
 
 <template>
+  <nav>
+    <router-link :to="{name: 'HomePage'}" class="ms-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-neutral-700 hover:text-neutral-800 focus:underline dark:text-neutral-200 dark:hover:text-neutral-100">
+      <svg class="rotate-180 w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+      </svg>
+      Retour à la liste
+    </router-link>
+  </nav>
 
-  <article class="dark:bg-gray-800 dark:border-gray-700">
+  <article class="mx-auto w-full max-w-[768px] p-4 md:p-6 lg:p-8">
+    <header class="flex flex-col items-center items-center dark:text-white">
+      <img
+        v-if="article.image"
+        :src="article.image"
+        class="w-full rounded-lg mb-4"
+        aria-hidden="true" />
 
+      <h1 class="w-full text-3xl px-2 pb-2 dark:text-white">{{ article.title }}</h1>
+      <p class="w-full text-lg px-2 text-neutral-700 dark:text-neutral-100">{{ article.author }} – {{ new Date(Date.parse(article.date)).toLocaleDateString() }}</p>
+    </header>
 
-    <div id="ArticleHeader" class="dark:text-white">
-      <img v-if="article.image"
-           :src="article.image"
-           role="img"
-           aria-hidden="true">
-
-      <div  class="dark:text-white">
-        <h1>{{ article.title }}</h1>
-        <p>{{ article.author }} – {{ new Date(Date.parse(article.date)).toLocaleDateString() }}</p>
-      </div>
-
+    <div class="mx-auto max-w-[768px] px-2 py-6 dark:text-white">
+      <p v-for="paragraph in article.content" class="text-neutral-800 mb-4">
+        {{ paragraph }}
+      </p>
     </div>
 
-    <div id="ArticleBody" class="dark:text-white">
-      {{ article.content[0] }}
-    </div>
-
-    <div id="ArticleFooter">
-      <div></div>
-      <div id="Reactions">
-        <button onclick="console.log('You liked the article')">
-          <img src="../../assets/icon_like.png" role="img" alt="thumb up to like content">
+    <footer class="mx-auto flex gap-3 justify-center max-w-[768px]">
+      <template v-for="reaction in reactions">
+        <button @click="console.log(reaction.message)">
+          <img :src="`/icons/${reaction.icon}`" :alt="reaction.alt" class="w-8 h-8 rounded-full hover:shadow-xl hover:translate-y-[-25%] hover:scale-[1.25] transition" />
         </button>
-        <button onclick="console.log('You loved the article')">
-          <img src="../../assets/icon_heart.png" role="img" alt="heart to love content">
-        </button>
-        <button onclick="console.log('You laugth of the article')">
-          <img src="../../assets/icon_laugh.png" role="img" alt="laugh to funny content">
-        </button>
-        <button onclick="console.log('You are chocked by the article')">
-          <img src="../../assets/icon_chocked.png" role="img" alt="surprised by the content">
-        </button>
-        <button onclick="console.log('You are sad because of the article')">
-          <img src="../../assets/icon_sad.png" role="img" alt="sad to sympathise with content">
-        </button>
-        <button onclick="console.log('You hated the article')">
-          <img src="../../assets/icon_angry.png" role="img" alt="angry to hate content">
-        </button>
-      </div>
-      <router-link :to="{name: 'HomePage'}">
-        <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Retour
-        </button>
-      </router-link>
-    </div>
-
+      </template>
+    </footer>
   </article>
-
 </template>
 
-
 <style scoped>
-
-article {
-  height: 75vh;
-  width: 75%;
-
-  box-shadow: 0 0 5px grey;
-  border-radius: 1vh;
-
-  padding: 2vh;
-  margin: 5vh 0;
-
-  align-self: center;
-}
-
-#ArticleHeader {
-  height: 33vh;
-
-  display: flex;
-  flex-wrap: nowrap;
-
-  align-items: center;
-}
-
-#ArticleHeader img {
-  height: inherit;
-  width: 33%;
-
-  margin-right: 2.5vh;
-
-  border-radius: 1vh;
-  box-shadow: inherit;
-
-  object-fit: cover;
-}
-
-#ArticleHeader h1 {
-  font-size: xxx-large;
-  width: 100%;
-}
-
-#ArticleHeader sub {
-  width: 100%;
-}
-
-#ArticleBody {
-  margin: 5vh 0;
-  height: 20vh;
-}
-
-
-#ArticleFooter {
-  height: 5vh;
-
-  display: flex;
-  justify-content: space-between;
-
-  position: static;
-  bottom: 0;
-
-  align-items: center;
-}
-
-#Reactions {
-  width: 50vh;
-  display: flex;
-  justify-content: space-around;
-}
-
-#Reactions img {
-  height: 5vh;
-  border-radius: 100%;
-}
-
-#Reactions img:hover {
-  height: 6vh;
-  box-shadow: 0 0 15px crimson;
-}
-
 </style>
-

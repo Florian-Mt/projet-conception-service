@@ -1,7 +1,14 @@
 <script setup lang="ts">
+  import { useRoute } from 'vue-router'
+  import { useArticleStore } from '@/stores/article.ts'
   import ArticleTemplate from '@/components/templates/ArticleTemplate.vue'
+
+  const route = useRoute()
+
+  const articleStore = useArticleStore()
+  const article = articleStore.article(Number(route.params.id))
 </script>
 
 <template>
-  <ArticleTemplate/>
+  <ArticleTemplate :article="article" />
 </template>
