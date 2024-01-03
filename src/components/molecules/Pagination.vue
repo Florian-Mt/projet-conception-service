@@ -28,6 +28,7 @@
     <ul class="flex items-center -space-x-px h-8 text-sm">
       <li :key="i" v-for="i in currentItems">
         <router-link :to="{name: 'HomePage', params: {pageNumber: i}}">
+          <span class="sr-only">Page</span>
           <span v-if="i == currentPage" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white" aria-current="page" :class="{'rounded-s-lg': i == firstItem, 'rounded-e-lg': i == lastItem}">
             {{ i }}
           </span>

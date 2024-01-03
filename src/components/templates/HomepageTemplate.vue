@@ -15,7 +15,7 @@
     <Pagination :currentPage="currentPage" :pagesCount="pagesCount" />
 
     <section class="flex flex-col md:grid md:grid-cols-2 gap-4 px-8 py-4 grow">
-      <Card v-for="article, i in currentArticles" :key="i" :id="i" :article="article" />
+      <Card v-for="{id, article} in currentArticles" :key="id" :id="id" :article="article" />
     </section>
 
     <Pagination :currentPage="currentPage" :pagesCount="pagesCount" />

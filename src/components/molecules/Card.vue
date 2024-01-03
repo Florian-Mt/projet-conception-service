@@ -10,16 +10,17 @@
 <template>
   <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <router-link :to="{name: 'ArticlePage', params: {id: id}}">
+      <span class="sr-only">{{ article.title }}</span>
       <img class="rounded-t-lg" :src="article.image" alt="" />
     </router-link>
 
     <div class="flex flex-col p-5">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <h2 class="text-xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
         <router-link :to="{name: 'ArticlePage', params: {id: id}}">
           {{ article.title }}
         </router-link>
       </h2>
-      <h3 class="mb-2 font-semibold text-gray-500 dark:text-gray-400">
+      <h3 class="mb-3 font-semibold text-gray-500 dark:text-gray-400">
         {{ article.author }} – {{ new Date(Date.parse(article.date)).toLocaleDateString() }}
       </h3>
 
