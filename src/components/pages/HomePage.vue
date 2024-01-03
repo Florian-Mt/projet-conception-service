@@ -1,10 +1,14 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
+  import { computed, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
-  import HomepageTemplate from '@/components/templates/HomepageTemplate.vue'
-  import NotFoundTemplate from '@/components/templates/NotFoundTemplate.vue'
   import { ARTICLES_PER_PAGE } from '@/constants'
   import { useArticleStore } from '@/stores/article'
+  import HomepageTemplate from '@/components/templates/HomepageTemplate.vue'
+  import NotFoundTemplate from '@/components/templates/NotFoundTemplate.vue'
+
+  onMounted(() => {
+    window.scrollTo(0, 0)
+  })
 
   const articleStore = useArticleStore()
 
