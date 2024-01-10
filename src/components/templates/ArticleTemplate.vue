@@ -57,12 +57,17 @@
         class="w-full rounded-lg mb-4"
         aria-hidden="true" />
 
-      <h1 class="w-full text-3xl px-2 pb-2 dark:text-white">{{ article.title }}</h1>
-      <p class="w-full text-lg px-2 text-neutral-700 dark:text-neutral-100">{{ article.author }} – {{ new Date(Date.parse(article.date)).toLocaleDateString() }}</p>
+      <h1 tabindex="0" class="w-full text-3xl px-2 pb-2 dark:text-white">
+        {{ article.title }}
+      </h1>
+
+      <p tabindex="0" class="w-full text-lg px-2 text-neutral-700 dark:text-neutral-100">
+        {{ article.author }} – {{ new Date(Date.parse(article.date)).toLocaleDateString() }}
+      </p>
     </header>
 
     <div class="mx-auto max-w-[768px] px-2 py-6 dark:text-white">
-      <p v-for="paragraph in article.content" class="text-neutral-800 mb-4">
+      <p tabindex="0" v-for="paragraph in article.content" class="text-neutral-800 mb-4">
         {{ paragraph }}
       </p>
     </div>
