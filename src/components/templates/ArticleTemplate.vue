@@ -50,7 +50,7 @@
   </nav>
 
   <article class="mx-auto w-full max-w-[768px] p-4 md:p-6 lg:p-8">
-    <header class="flex flex-col items-center items-center dark:text-white">
+    <header class="flex flex-col items-center dark:text-white">
       <img
         v-if="article.image"
         :src="article.image"
