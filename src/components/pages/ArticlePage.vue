@@ -3,6 +3,7 @@
   import { useRoute } from 'vue-router'
   import { useArticleStore } from '@/stores/article.ts'
   import ArticleTemplate from '@/components/templates/ArticleTemplate.vue'
+  import NotFoundTemplate from '@/components/templates/NotFoundTemplate.vue'
 
   onMounted(() => {
     window.scrollTo(0, 0)
@@ -11,9 +12,11 @@
   const route = useRoute()
 
   const articleStore = useArticleStore()
-  const article = articleStore.article(Number(route.params.id))
+  const articleId = Number(route.params.id)
+  const article = (0 < articleId && articleId <= articleStore.articles.length) ? articleStore.article(articleId) : null
 </script>
 
 <template>
-  <ArticleTemplate :article="article" />
+  <ArticleTemplate v-if="article" :article="article" />
+  <NotFoundTemplate v-else />
 </template>
