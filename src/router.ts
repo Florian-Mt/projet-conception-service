@@ -9,11 +9,17 @@ const routes = [
     path: '/:pageNumber([1-9][0-9]*)?',
     name: 'HomePage',
     component: HomePage,
+    meta: {
+      title: 'Moyen – Le blogue pas trop mauvais.',
+    },
   },
   {
     path: '/article/create',
     name: 'ArticleCreationPage',
     component: ArticleCreationPage,
+    meta: {
+      title: 'Créer un article — Moyen – Le blogue pas trop mauvais.',
+    },
   },
   {
     path: '/article/:id',
@@ -24,6 +30,9 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'NotFoundPage',
     component: NotFoundPage,
+    meta: {
+      title: 'Erreur 404 – Le blogue pas trop mauvais.',
+    },
   },
 ]
 
@@ -36,6 +45,19 @@ const router = createRouter({
     }
     return { x: 0, y: 0 }
   },
+})
+
+router.beforeEach((to, from, next) => {
+  // Get the page title from the route meta data that we have defined
+  // See further down below for how we setup this data
+  const title = to.meta.title
+  // If the route has a title, set it as the page title of the document/page
+  if (title) {
+    document.title = title
+  }
+
+  // Continue resolving the route
+  next()
 })
 
 export default router
