@@ -1,102 +1,111 @@
 <script setup lang="ts">
-  import {Input} from "postcss";
+  import { ref } from 'vue'
 
-  function onInput(e: Event) {
-    let event = e as InputEvent
-    let target = event.target as HTMLInputElement
-    if (target == null) return
-    let image = document.getElementById("image") as HTMLImageElement
-    image.src = target.value
-    image.onload = imageLoaded
-    image.onerror = imageError
+  import router from '@/router.ts'
+  import { Article, useArticleStore } from '@/stores/article.ts'
+
+  const articleStore = useArticleStore()
+
+  const formElement = ref<HTMLFormElement | null>(null)
+  const imageUrl = ref<string | null>(null)
+
+  const postArticle = (event: SubmitEvent) => {
+    const target = event.target as HTMLFormElement
+
+    articleStore.addArticle({
+      title: target.elements.title.value,
+      author: target.elements.author.value,
+      date: new Date(Date.now()).toISOString().split('T')[0],
+      content: target.elements.content.value.split("\n").filter(paragraph => paragraph !== ""),
+      image: target.elements.url.value,
+    } as Article)
+
+    router.push({name: 'ArticlePage', params: {id: articleStore.articles.length}})
   }
-
-  function imageLoaded() {
-    let image = document.getElementById("image") as HTMLImageElement
-    image.className = ""
-  }
-
-  function  imageError() {
-    let image = document.getElementById("image") as HTMLImageElement
-    image.className = "w-12"
-    image.src = "`/icons/icon_photo.svg`"
-  }
-
 </script>
 
 <template>
+  <form class="flex flex-col gap-4 mx-auto w-full max-w-[768px] p-4" @submit.prevent="postArticle" :ref="formElement">
+    <h1 class="self-center text-3xl font-black dark:text-white">Créez votre article ici</h1>
+    <p class="text-gray-900 dark:text-neutral-100">
+      Exprimez-vous, partagez vos idées et découvrez des perspectives variées en participant à nos discussions.
+      Cette page dédiée aux posts vous offre l&rsquo;opportunité d&rsquo;engager des conversations enrichissantes avec notre communauté diversifiée.
+      N&rsquo;hésitez pas à partager vos expériences, poser des questions, ou simplement échanger des idées.
+      Assurons ensemble un environnement respectueux et constructif. Commencez dès maintenant à contribuer à notre communauté florissante&nbsp;!
+    </p>
 
-<form class="w-full mx-auto max-w-screen-xl p-4 flex flex-col gap-4 grow">
-  <h1 class="self-center font-black text-3xl" tabindex="0"> Créer votre post ici</h1>
-
-  <p tabindex="0">
-    Exprimez-vous, partagez vos idées et découvrez des perspectives variées en participant à nos discussions.
-    Cette page dédiée aux posts vous offre l'opportunité d'engager des conversations enrichissantes avec notre communauté diversifiée.
-    N'hésitez pas à partager vos expériences, poser des questions, ou simplement échanger des idées.
-    Assurons ensemble un environnement respectueux et constructif. Commencez dès maintenant à contribuer à notre communauté florissante !
-  </p>
-
-  <div>
-    <h3> Title :</h3>
-    <input type="text"
-           name="title"
-           class="border-2 border-black rounded-lg w-full p-1"
-           aria-label="title"
-           required>
-  </div>
-
-  <div>
-    <h3> Author :</h3>
-    <input type="text"
-           name="author"
-           class="border-2 border-black rounded-lg w-full p-1"
-           aria-label="author"
-           required>
-  </div>
-
-  <div class="flex flex-row-reverse justify-evenly items-center">
-    <div class="w-1/2">
-      <h5 class="font-bold">Note aux utilisateurs :</h5>
-      <p class="font-light italic" tabindex="0">
-        Merci d'utiliser cette plateforme de manière responsable lors de l'upload d'images.
-        Tout contenu téléchargé doit respecter les lois en vigueur et ne pas enfreindre les droits d'auteur.
-        Nous nous réservons le droit de supprimer tout contenu inapproprié ou offensant.
-        En téléchargeant une image, vous confirmez détenir les droits nécessaires ou l'autorisation pour sa publication.
-        Tout manquement à ces conditions pourrait entraîner la suspension de votre compte.
-        Merci de votre compréhension et de votre coopération.
-      </p>
+    <div>
+      <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titre</label>
+      <input
+        class="bg-gray-50 border-2 border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Par exemple, Comment j’ai créé une usine à clics en Vue.js en 1 journée"
+        type="text"
+        id="title"
+        name="title"
+        aria-label="Titre de l’article"
+        required />
     </div>
 
-    <div class="w-1/6">
+    <div>
+      <label for="author" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Auteur</label>
+      <input
+        class="bg-gray-50 border-2 border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Par exemple, Jeff Bezos"
+        type="text"
+        id="author"
+        name="author"
+        aria-label="Auteur de l’article"
+        required />
+    </div>
 
-      <div class="w-full aspect-[1/1] bg-gray-300 border-black border-dashed border-2 rounded-2xl flex flex-col justify-center items-center">
-        <img :src="`/icons/icon_photo.svg`" class="w-12" alt="" id="image">
+    <div class="flex flex-col lg:flex-row gap-4">
+      <div class="flex flex-col gap-1">
+        <div class="relative overflow-hidden flex flex-col justify-center items-center mx-auto w-1/2 lg:w-full aspect-[1/1] bg-gray-300 border-2 border-dashed border-gray-800 rounded-2xl">
+          <img class="absolute w-1/2" src="/icons/icon_photo.svg" alt="" />
+          <img class="absolute object-cover h-full" :src="imageUrl" alt="" />
+        </div>
+
+        <div class="flex flex-col gap-1 items-center">
+          <label for="url" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lien de l’illustration</label>
+          <input
+            class="bg-gray-50 border-2 border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="https://www..."
+            type="text"
+            id="url"
+            name="url"
+            aria-label="Bannière de l’article"
+            required
+            v-model="imageUrl" />
+        </div>
       </div>
 
-      <div class="flex flex-row items-center">
-        <p class="w-3/12">Url :</p>
-        <input @input="onInput"
-               class="w-9/12 m-1 border-black border-2 rounded-lg px-1"
-               aria-label="Article image">
+      <div class="col-span-2 flex flex-col text-gray-900 dark:text-neutral-100">
+        <h2 class="font-bold">Note aux utilisateurs</h2>
+        <p class="font-light italic">
+          Merci d&rsquo;utiliser cette plateforme de manière responsable lors du téléchargement d&rsquo;images.
+          Tout contenu téléchargé doit respecter les lois en vigueur et ne pas enfreindre les droits d&rsquo;auteur.
+          Nous nous réservons le droit de supprimer tout contenu inapproprié ou offensant.
+          En téléchargeant une image, vous confirmez détenir les droits nécessaires ou l&rsquo;autorisation pour sa publication.
+          Tout manquement à ces conditions pourrait entraîner la suspension de votre compte.
+          Merci de votre compréhension et de votre coopération.
+        </p>
       </div>
     </div>
-  </div>
 
-  <div class="flex flex-col grow">
-    <h3> Content :</h3>
-    <textarea name="content"
-              class="border-2 border-black rounded-lg p-2 w-full grow"
-              aria-label="Article content"
-              required/>
-  </div>
+    <div class="flex flex-col grow">
+      <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contenu</label>
+      <textarea
+        class="w-full min-h-32 bg-gray-50 border-2 border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Exprimez vos idées ! Même sans talent, on peut engranger un max de clics avec une accroche qui claque…"
+        id="content"
+        name="content"
+        minlength="50"
+        aria-label="Contenu de l’article"
+        required />
+    </div>
 
-  <div class="flex flex-row justify-center gap-5">
-    <input type="submit"
-           value="Envoyer"
-           name="submit"
-           class="w-32 h-10 cursor-pointer rounded-2xl bg-blue-600 text-white"
-           aria-label="Send the article">
-  </div>
-</form>
-
+    <button class="self-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm w-full sm:w-auto px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" aria-label="Publier l’article">
+      Publier
+    </button>
+  </form>
 </template>
