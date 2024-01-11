@@ -16,7 +16,7 @@ export const useArticleStore = defineStore('article', {
   }),
   actions: {
     addArticle(article: Article) {
-      this.articles = [...this.articles, article]
+      this.articles = [article, ...this.articles]
     },
   },
   getters: {
