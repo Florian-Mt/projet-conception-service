@@ -9,32 +9,32 @@
     {
       message: 'You liked the article',
       icon: 'icon_like.png',
-      alt: 'thumb up to like content',
+      alt: 'Pouce',
     },
     {
       message: 'You loved the article',
       icon: 'icon_heart.png',
-      alt: 'heart to love content',
+      alt: 'Cœur',
     },
     {
       message: 'You laughed at the article',
       icon: 'icon_laugh.png',
-      alt: 'laugh to funny content',
+      alt: 'Rire',
     },
     {
       message: 'You are chocked by the article',
       icon: 'icon_chocked.png',
-      alt: 'surprised by the content',
+      alt: 'Surprise',
     },
     {
       message: 'You are sad because of the article',
       icon: 'icon_sad.png',
-      alt: 'sad to sympathise with content',
+      alt: 'Tristesse',
     },
     {
       message: 'You hated the article',
       icon: 'icon_angry.png',
-      alt: 'angry to hate content',
+      alt: 'Colère',
     },
   ]
 </script>
@@ -58,17 +58,17 @@
         alt=""
         aria-hidden="true" />
 
-      <h1 class="w-full text-3xl px-2 pb-2 dark:text-white">
+      <h1 tabindex="0" class="w-full text-3xl px-2 pb-2 dark:text-white">
         {{ article.title }}
       </h1>
 
-      <p class="w-full text-lg px-2 text-gray-700 dark:text-gray-200">
+      <p tabindex="0" class="w-full text-lg px-2 text-gray-700 dark:text-gray-200">
         {{ article.author }} – {{ new Date(Date.parse(article.date)).toLocaleDateString() }}
       </p>
     </header>
 
     <div class="mx-auto max-w-[768px] px-2 py-6 text-gray-800 dark:text-gray-100">
-      <p v-for="paragraph in article.content" class="mb-4">
+      <p tabindex="0" v-for="paragraph in article.content" class="mb-4">
         {{ paragraph }}
       </p>
     </div>
@@ -76,7 +76,7 @@
     <footer class="mx-auto flex gap-3 justify-center max-w-[768px]">
       <template v-for="reaction in reactions">
         <button :title="reaction.alt" @click="console.log(reaction.message)">
-          <img :src="`/icons/${reaction.icon}`" :alt="reaction.alt" class="w-8 h-8 rounded-full hover:shadow-xl hover:translate-y-[-25%] hover:scale-[1.25] transition" />
+          <img :src="`/icons/${reaction.icon}`" alt="" class="w-8 h-8 rounded-full hover:shadow-xl hover:translate-y-[-25%] hover:scale-[1.25] transition" />
         </button>
       </template>
     </footer>

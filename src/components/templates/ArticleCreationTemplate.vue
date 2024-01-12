@@ -26,8 +26,8 @@
 
 <template>
   <form class="flex flex-col gap-4 mx-auto w-full max-w-[768px] p-4" @submit.prevent="postArticle" :ref="formElement">
-    <h1 class="self-center text-3xl font-black dark:text-white">Créez votre article ici</h1>
-    <p class="text-gray-900 dark:text-neutral-100">
+    <h1 tabindex="0" class="self-center text-3xl font-black dark:text-white">Créez votre article ici</h1>
+    <p tabindex="0" class="text-gray-900 dark:text-neutral-100">
       Exprimez-vous, partagez vos idées et découvrez des perspectives variées en participant à nos discussions.
       Cette page dédiée aux posts vous offre l&rsquo;opportunité d&rsquo;engager des conversations enrichissantes avec notre communauté diversifiée.
       N&rsquo;hésitez pas à partager vos expériences, poser des questions, ou simplement échanger des idées.
@@ -58,7 +58,19 @@
         required />
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-4">
+    <div class="flex flex-col-reverse lg:flex-row-reverse gap-4">
+      <div class="col-span-2 flex flex-col text-gray-900 dark:text-neutral-100">
+        <h2 class="font-bold">Note aux utilisateurs</h2>
+        <p tabindex="0" class="font-light italic">
+          Merci d&rsquo;utiliser cette plateforme de manière responsable lors du téléchargement d&rsquo;images.
+          Tout contenu téléchargé doit respecter les lois en vigueur et ne pas enfreindre les droits d&rsquo;auteur.
+          Nous nous réservons le droit de supprimer tout contenu inapproprié ou offensant.
+          En téléchargeant une image, vous confirmez détenir les droits nécessaires ou l&rsquo;autorisation pour sa publication.
+          Tout manquement à ces conditions pourrait entraîner la suspension de votre compte.
+          Merci de votre compréhension et de votre coopération.
+        </p>
+      </div>
+
       <div class="flex flex-col gap-1">
         <div class="relative overflow-hidden flex flex-col justify-center items-center mx-auto w-1/2 lg:w-full aspect-[1/1] bg-gray-300 border-2 border-dashed border-gray-800 rounded-2xl">
           <img class="absolute w-1/2" src="/icons/icon_photo.svg" alt="" />
@@ -78,18 +90,6 @@
             v-model="imageUrl" />
         </div>
       </div>
-
-      <div class="col-span-2 flex flex-col text-gray-900 dark:text-neutral-100">
-        <h2 class="font-bold">Note aux utilisateurs</h2>
-        <p class="font-light italic">
-          Merci d&rsquo;utiliser cette plateforme de manière responsable lors du téléchargement d&rsquo;images.
-          Tout contenu téléchargé doit respecter les lois en vigueur et ne pas enfreindre les droits d&rsquo;auteur.
-          Nous nous réservons le droit de supprimer tout contenu inapproprié ou offensant.
-          En téléchargeant une image, vous confirmez détenir les droits nécessaires ou l&rsquo;autorisation pour sa publication.
-          Tout manquement à ces conditions pourrait entraîner la suspension de votre compte.
-          Merci de votre compréhension et de votre coopération.
-        </p>
-      </div>
     </div>
 
     <div class="flex flex-col grow">
@@ -99,7 +99,7 @@
         placeholder="Exprimez vos idées ! Même sans talent, on peut engranger un max de clics avec une accroche qui claque…"
         id="content"
         name="content"
-        minlength="50"
+        minlength="10"
         aria-label="Contenu de l’article"
         required />
     </div>

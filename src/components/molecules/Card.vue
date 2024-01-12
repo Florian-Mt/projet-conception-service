@@ -20,11 +20,11 @@
           {{ article.title }}
         </router-link>
       </h2>
-      <h3 class="mb-3 font-semibold text-gray-500 dark:text-gray-400">
+      <h3 tabindex="0" class="mb-3 font-semibold text-gray-500 dark:text-gray-400">
         {{ article.author }} – {{ new Date(Date.parse(article.date)).toLocaleDateString() }}
       </h3>
 
-      <p class="mb-4 font-normal text-gray-700 dark:text-gray-200">
+      <p tabindex="0" class="mb-4 font-normal text-gray-700 dark:text-gray-200">
         {{ article.content[0].slice(0, 150) }}…
       </p>
       <router-link class="self-end" :to="{name: 'ArticlePage', params: {id: id}}">
